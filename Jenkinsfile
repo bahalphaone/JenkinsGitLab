@@ -5,11 +5,10 @@ pipeline {
 	// agent { docker { image 'maven: 3.6.3'} }
 	// agent { docker { image 'maven:3.5.0-jdk-8'} }
 	environment {
-		dockerHome = tool 'myDocker'
+		// dockerHome = tool 'myDocker'
 		mavenHome = tool 'myMaven'
 		// PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
-		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
-		// je comprend pas 
+		PATH = "$mavenHome/bin:$PATH"
 
 	}
 
@@ -17,7 +16,7 @@ pipeline {
 		stage ('Checkout') {
 			steps {
 				sh 'mvn --version'
-				sh 'docker version'
+				// sh 'docker version'
 				echo "Build"
 				echo "PATH - $PATH"
 				echo "BUILD_NUMBER - $env.BUILD_NUMBER"
@@ -49,40 +48,40 @@ pipeline {
 		}
 
 		}
-		stage('Package') {
-			steps {
-				sh "mvnPackage -DskipTests"
-		}
+		//stage('Package') {
+			//steps {
+				//sh "mvnPackage -DskipTests"
+		// }
 
-		}
-		stage ('Buil Docker Image'){
-			steps {
+		// }
+		// stage ('Buil Docker Image'){
+			// steps {
 				// sh "docker buil -t bahalpha/ubuntu:$env.BUILD_TAG"
-				script {
+				//script {
 					// "docker.build -t bahalpha/ubuntu:$env.BUILD_TAG"
-					script {
-						dockerImage = docker.build("bahalpha/ubuntu:${env.BUILD_TAG}")
-					}
-				}
-			}
+					//script {
+						//dockerImage = docker.build("bahalpha/ubuntu:${env.BUILD_TAG}")
+					//}
+				//}
+			//}
 
-		}
-		stage ('Push Docker Image') {
+		// }
+		// stage ('Push Docker Image') {
 
-			steps {
-				script {
-					docker.withRegistry('', 'dockerhub'){
+			// steps {
+				// script {
+					// docker.withRegistry('', 'dockerhub'){
 
-						dockerImage.Push();
-						dockerImage.Push('latest');
+						// dockerImage.Push();
+						// dockerImage.Push('latest');
 
-					}
+					// }
 
-				}
+				// }
 
-			}
-		}
-	} 
+			// }
+		// }
+	// } 
 	
 	post {
 
