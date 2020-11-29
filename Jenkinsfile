@@ -9,7 +9,7 @@ pipeline {
 		mavenHome = tool 'myMaven'
 		// PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
 		PATH = "$mavenHome/bin:$PATH"
-
+		// je comprend pas 
 
 	}
 
